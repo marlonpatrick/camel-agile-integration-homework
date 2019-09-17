@@ -31,13 +31,13 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 @SpringBootApplication
 @ComponentScan("org.apache.cxf")
-public class Application {
+public class InboundApplication {
 
     @Autowired
     private Bus bus;
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(InboundApplication.class, args);
     }
     
     @Bean
