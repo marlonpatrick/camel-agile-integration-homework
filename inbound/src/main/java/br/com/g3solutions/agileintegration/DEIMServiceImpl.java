@@ -46,38 +46,13 @@ public class DEIMServiceImpl implements DEIMService {
 			String camelResponse = template.requestBodyAndHeaders(template.getDefaultEndpoint(), person, new HashMap<String, Object>(),
 					String.class);
 
-			System.out.println("addPerson called");
-//			System.out.println(camelResponse);
-
-			if (person != null) {
-				return Response.ok().build();
-			}
-
 			ESBResponse esbResponse = new ESBResponse();
 			esbResponse.setBusinessKey(UUID.randomUUID().toString());
 			esbResponse.setPublished(true);
-
-			// Here we hard code the response code values to strings for the demo
-			// A better practice would be to have an ENUM class
-			String comment = "NONE";
-			if (camelResponse.equals("0")) {
-				comment = "NO MATCH";
-			} else if (camelResponse.equals("1")) {
-				comment = "MATCH";
-			} else if (camelResponse.equals("2")) {
-				comment = "DONE";
-			} else {
-				comment = "ERROR";
-			}
-			esbResponse.setComment(comment);
-
+			esbResponse.setComment(camelResponse);
 			builder.status(Response.Status.OK);
 			builder.entity(esbResponse);
 
-		} catch (CamelExecutionException cee) {
-			builder.status(Response.Status.INTERNAL_SERVER_ERROR);
-			builder.entity(cee.getMessage());
-			cee.printStackTrace();
 		} catch (Exception e) {
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR);
 			builder.entity(e.getMessage());

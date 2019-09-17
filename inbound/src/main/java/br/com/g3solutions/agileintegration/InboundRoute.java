@@ -25,8 +25,8 @@ public class InboundRoute  extends RouteBuilder {
 		.marshal().jaxb(Boolean.TRUE)
         .log(">>> direct:inboundRoute XML:\n${body}")
 		.setExchangePattern(ExchangePattern.InOnly)
-		.to("amqp:queue:deim.in");
-//		.transform().constant("Processed the customer data");
+		.to("amqp:queue:deim.in")
+		.transform().constant("DONE");
     	
     	from("amqp:queue:deim.in")
     	.log(">>> amqp:queue:deim.in:\n${body}");
