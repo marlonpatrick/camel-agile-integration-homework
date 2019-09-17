@@ -1,5 +1,6 @@
 package br.com.g3solutions.agileintegration;
 
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,14 @@ public class InboundRoute  extends RouteBuilder {
 //			.log("Exception ExchangePattern After: ${exchange.pattern}")		
 //			.to("amqp:queue:errorQueue")
 //			.end()
-//		.marshal().jaxb(Boolean.TRUE)
-        .log(">>> calling direct:inboundRoute: ${body}");
+		.marshal().jaxb(Boolean.TRUE)
+        .log(">>> direct:inboundRoute XML:\n${body}")
+		.setExchangePattern(ExchangePattern.InOnly)
+		.to("amqp:queue:deim.in");
+//		.transform().constant("Processed the customer data");
+    	
+    	from("amqp:queue:deim.in")
+    	.log(">>> amqp:queue:deim.in:\n${body}");
+    	
     }
 }

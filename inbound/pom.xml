@@ -55,6 +55,16 @@
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jaxb-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-amqp</artifactId>
+		</dependency>
+
 		<!-- <dependency> <groupId>org.apache.cxf</groupId> <artifactId>cxf-rt-transports-http-jetty</artifactId> 
 			</dependency> <dependency> <groupId>org.apache.activemq</groupId> <artifactId>activemq-pool</artifactId> 
 			</dependency> <dependency> <groupId>com.customer.app</groupId> <artifactId>mq-service</artifactId> 

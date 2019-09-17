@@ -17,6 +17,8 @@ package br.com.g3solutions.agileintegration;
 
 import java.util.Arrays;
 
+import org.apache.camel.CamelContext;
+import org.apache.camel.component.amqp.AMQPConnectionDetails;
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
@@ -32,6 +34,9 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 public class InboundApplication {
 
     @Autowired
+    private CamelContext camelContext;
+
+    @Autowired
     private Bus bus;
     
     @Autowired
@@ -43,7 +48,6 @@ public class InboundApplication {
     
     @Bean
     public Server rsServer() {
-        // setup CXF-RS
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
         endpoint.setBus(bus);
         endpoint.setAddress("/");
@@ -53,4 +57,14 @@ public class InboundApplication {
         return endpoint.create();
     }
 
+    /**
+     * export AMQP_SERVICE_HOST = "localhost"
+     * export AMQP_SERVICE_PORT = "5672"
+     * export AMQP_SERVICE_USERNAME = "username"
+     * export AMQP_SERVICE_PASSWORD = "password"
+     */
+    @Bean
+    AMQPConnectionDetails amqpConnection() {
+      return AMQPConnectionDetails.discoverAMQP(camelContext);
+    }
 }

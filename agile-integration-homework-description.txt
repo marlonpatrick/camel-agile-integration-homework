@@ -49,6 +49,12 @@ You will implement the add, update, and search methods in the REST endpoint serv
 
 	Once the message is successfully published, a Done XML string is sent back to the client.
 
+./bin/artemis create --user admin --password admin --role admin --require-login instances/agile-integration-homework
+
+instances/agile-integration-homework/bin/artemis run
+
+instances/agile-integration-homework/bin/artemis queue create --user admin --password admin --auto-create-address --address deim.in --name deim.in --preserve-on-no-consumers --durable --anycast --url tcp://localhost:61616
+
 ----------------------------------------------
 
 2.4. Develop the JUnit Tests

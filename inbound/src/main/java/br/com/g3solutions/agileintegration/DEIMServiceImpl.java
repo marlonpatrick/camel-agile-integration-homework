@@ -1,7 +1,6 @@
 package br.com.g3solutions.agileintegration;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
@@ -43,16 +42,12 @@ public class DEIMServiceImpl implements DEIMService {
 
 		ResponseBuilderImpl builder = new ResponseBuilderImpl();
 
-		// This header is used to direct the message in the Camel route
-		Map<String, Object> headers = new HashMap<String, Object>();
-		headers.put("METHOD", "match");
-
 		try {
-			String camelResponse = template.requestBodyAndHeaders(template.getDefaultEndpoint(), person, headers,
+			String camelResponse = template.requestBodyAndHeaders(template.getDefaultEndpoint(), person, new HashMap<String, Object>(),
 					String.class);
 
 			System.out.println("addPerson called");
-			System.out.println(camelResponse);
+//			System.out.println(camelResponse);
 
 			if (person != null) {
 				return Response.ok().build();
