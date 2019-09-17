@@ -1,0 +1,92 @@
+
+http://localhost:8080/rest/test
+
+----------------------------------------------
+
+
+Technical goals to accomplish the above:
+
+	Build a RESTful CXF service that receives the patient record and validates it.
+
+	Publish the XML to a queue and send an acknowledgement back to the client (Done transformer in the use case document).
+
+	Receive the message from the messaging system and invoke the backend web service. The Nextgate web service will be provided for testing. Respond to the client using the Done transformer.
+----------------------------------------------
+
+
+Sub-folders are as follows:
+
+	artifacts: WSDL and XSD files you work from
+
+	inbound: Route or service that receives the patient payload
+
+	xlate: Route that marshalls the Java object to XML
+
+	outbound: Route that publishes the XML payload on a A-MQ queue
+
+----------------------------------------------
+
+2.1. CXF REST Service
+
+
+For this section, we recommend that you use a standard REST service CXF-RS. 
+
+You can use Spring or Blueprint which starts a RESTful service with an implementation. 
+
+Inside the implementation, you can create a producer template and call a direct endpoint in Camel. 
+
+You will implement the add, update, and search methods in the REST endpoint service.
+
+----------------------------------------------
+
+2.2. Marshal the Java Object to XML
+
+	Using the JAXB marshaller, convert the payload to XML.
+
+----------------------------------------------
+
+2.3. Publish the XML on a Red Hat AMQ queue
+
+	Once the message is successfully published, a Done XML string is sent back to the client.
+
+----------------------------------------------
+
+2.4. Develop the JUnit Tests
+
+	Develop a feature and a fabric profile.
+
+	Test these using SoapUI or curl.
+
+----------------------------------------------
+
+2.5. Build the Inbound Project
+
+	On the command line, run mvn clean install.
+
+----------------------------------------------
+
+
+
+----------------------------------------------
+
+
+
+----------------------------------------------
+
+
+
+----------------------------------------------
+
+
+----------------------------------------------
+
+
+----------------------------------------------
+
+
+----------------------------------------------
+
+
+----------------------------------------------
+
+
