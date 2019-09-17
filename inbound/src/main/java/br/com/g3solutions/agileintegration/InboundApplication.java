@@ -25,16 +25,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 @SpringBootApplication
-@ComponentScan("org.apache.cxf")
 public class InboundApplication {
 
     @Autowired
     private Bus bus;
+    
+    @Autowired
+    private DEIMServiceImpl deimServiceImpl;
 
     public static void main(String[] args) {
         SpringApplication.run(InboundApplication.class, args);
@@ -45,9 +46,9 @@ public class InboundApplication {
         // setup CXF-RS
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
         endpoint.setBus(bus);
-        endpoint.setProvider(new JacksonJsonProvider());
-        endpoint.setServiceBeans(Arrays.<Object>asList(new DEIMServiceImpl()));
         endpoint.setAddress("/");
+        endpoint.setServiceBeans(Arrays.<Object>asList(deimServiceImpl));
+        endpoint.setProvider(new JacksonJsonProvider());
         endpoint.setFeatures(Arrays.asList(new Swagger2Feature()));
         return endpoint.create();
     }

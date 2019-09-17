@@ -15,75 +15,80 @@ import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.cxf.jaxrs.impl.ResponseBuilderImpl;
+import org.springframework.stereotype.Component;
 
 import com.customer.app.Person;
 import com.customer.app.response.ESBResponse;
 
+@Component
 public class DEIMServiceImpl implements DEIMService {
 
-  @Produce(uri = "direct:integrateRoute")
-  ProducerTemplate template;
+	@Produce(uri = "direct:inboundRoute")
+	ProducerTemplate template;
 
-  @Override
-  @GET
-  @Path("/test")
-  public String test() {
-	  return "CXF Homework Test";
-  }
+	@Override
+	@GET
+	@Path("/test")
+	public String test() {
+		return "CXF Homework Test";
+	}
 
-  @Override
-  @POST
-  @Path("/addPerson")
-  @Consumes(MediaType.APPLICATION_XML)
-  public Response addPerson(Person person) {
-	  
-	  if(person != null) {
-		  System.out.println("addPerson called");
-		  System.out.println(person);
-		  return Response.ok().build();
-	  }
+	@Override
+	@POST
+	@Path("/addPerson")
+	@Consumes(MediaType.APPLICATION_XML)
+	public Response addPerson(Person person) {
 
-    ResponseBuilderImpl builder = new ResponseBuilderImpl();
+		System.out.println("calling addPerson...");
 
-    // This header is used to direct the message in the Camel route
-    Map<String, Object> headers = new HashMap<String, Object>();
-    headers.put("METHOD", "match");
+		ResponseBuilderImpl builder = new ResponseBuilderImpl();
 
-    try {
-      String camelResponse = template.requestBodyAndHeaders(template.getDefaultEndpoint(),
-      person, headers, String.class);
+		// This header is used to direct the message in the Camel route
+		Map<String, Object> headers = new HashMap<String, Object>();
+		headers.put("METHOD", "match");
 
-      ESBResponse esbResponse = new ESBResponse();
-      esbResponse.setBusinessKey(UUID.randomUUID().toString());
-      esbResponse.setPublished(true);
+		try {
+			String camelResponse = template.requestBodyAndHeaders(template.getDefaultEndpoint(), person, headers,
+					String.class);
 
-      // Here we hard code the response code values to strings for the demo
-      // A better practice would be to have an ENUM class
-      String comment = "NONE";
-      if (camelResponse.equals("0")) {
-        comment = "NO MATCH";
-      } else if (camelResponse.equals("1")) {
-        comment = "MATCH";
-      } else if (camelResponse.equals("2")) {
-        comment = "DONE";
-      } else {
-        comment = "ERROR";
-      }
-      esbResponse.setComment(comment);
+			System.out.println("addPerson called");
+			System.out.println(camelResponse);
 
-      builder.status(Response.Status.OK);
-      builder.entity(esbResponse);
+			if (person != null) {
+				return Response.ok().build();
+			}
 
-    } catch (CamelExecutionException cee) {
-      builder.status(Response.Status.INTERNAL_SERVER_ERROR);
-      builder.entity(cee.getMessage());
-      cee.printStackTrace();
-    }catch(Exception e){
-      builder.status(Response.Status.INTERNAL_SERVER_ERROR);
-      builder.entity(e.getMessage());
-      e.printStackTrace();
-    }
+			ESBResponse esbResponse = new ESBResponse();
+			esbResponse.setBusinessKey(UUID.randomUUID().toString());
+			esbResponse.setPublished(true);
 
-    return builder.build();
-  }
+			// Here we hard code the response code values to strings for the demo
+			// A better practice would be to have an ENUM class
+			String comment = "NONE";
+			if (camelResponse.equals("0")) {
+				comment = "NO MATCH";
+			} else if (camelResponse.equals("1")) {
+				comment = "MATCH";
+			} else if (camelResponse.equals("2")) {
+				comment = "DONE";
+			} else {
+				comment = "ERROR";
+			}
+			esbResponse.setComment(comment);
+
+			builder.status(Response.Status.OK);
+			builder.entity(esbResponse);
+
+		} catch (CamelExecutionException cee) {
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR);
+			builder.entity(cee.getMessage());
+			cee.printStackTrace();
+		} catch (Exception e) {
+			builder.status(Response.Status.INTERNAL_SERVER_ERROR);
+			builder.entity(e.getMessage());
+			e.printStackTrace();
+		}
+
+		return builder.build();
+	}
 }
