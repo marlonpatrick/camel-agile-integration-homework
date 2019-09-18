@@ -31,7 +31,7 @@ public class XlateApplication {
     public static void main(String[] args) {
     	SpringApplication.run(XlateApplication.class, args);
     }
-
+    
     /**
      * export AMQP_SERVICE_HOST = "localhost"
      * export AMQP_SERVICE_PORT = "5672"

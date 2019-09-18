@@ -4,6 +4,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 import com.customer.app.Person;
+import com.sun.mdm.index.webservice.ExecuteMatchUpdate;
 
 @Component
 public class XlateRoute  extends RouteBuilder {
@@ -24,6 +25,8 @@ public class XlateRoute  extends RouteBuilder {
 //				System.out.println(messagebody);
 //			}
 //		})
-    	.unmarshal().jaxb(Person.class.getPackage().getName());
+    	.unmarshal().jaxb(Person.class.getPackage().getName())
+    	.convertBodyTo(ExecuteMatchUpdate.class)
+    	.log(">>> amqp:queue:deim.in ExecuteMatchUpdate:\n${body}");
     }
 }
