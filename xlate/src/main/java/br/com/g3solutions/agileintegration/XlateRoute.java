@@ -1,5 +1,6 @@
 package br.com.g3solutions.agileintegration;
 
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ public class XlateRoute  extends RouteBuilder {
     public void configure() throws Exception {
     	    	
     	from("amqp:queue:deim.in")
-    	.log(">>> amqp:queue:deim.in XML:\n${body}")
+    	.log(">>> Person XML:\n${body}")
 //    	.process(new Processor() {
 //			
 //			@Override
@@ -27,6 +28,10 @@ public class XlateRoute  extends RouteBuilder {
 //		})
     	.unmarshal().jaxb(Person.class.getPackage().getName())
     	.convertBodyTo(ExecuteMatchUpdate.class)
-    	.log(">>> amqp:queue:deim.in ExecuteMatchUpdate:\n${body}");
+    	.marshal().jaxb(Boolean.TRUE)
+    	.log(">>> ExecuteMatchUpdate XML:\n${body}")
+		.setExchangePattern(ExchangePattern.InOnly)
+		.to("amqp:queue:nextgate.out")
+    	.log(">>> XlateRoute: DONE");
     }
 }
