@@ -27,9 +27,5 @@ public class InboundRoute  extends RouteBuilder {
 		.setExchangePattern(ExchangePattern.InOnly)
 		.to("amqp:queue:deim.in")
 		.transform().constant("DONE");
-    	
-    	from("amqp:queue:deim.in")
-    	.log(">>> amqp:queue:deim.in:\n${body}");
-    	
     }
 }

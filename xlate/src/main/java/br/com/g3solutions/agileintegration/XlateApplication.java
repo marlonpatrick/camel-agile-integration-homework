@@ -15,49 +15,21 @@
  */
 package br.com.g3solutions.agileintegration;
 
-import java.util.Arrays;
-
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.amqp.AMQPConnectionDetails;
-import org.apache.cxf.Bus;
-import org.apache.cxf.endpoint.Server;
-import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
-import org.apache.cxf.jaxrs.swagger.Swagger2Feature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 @SpringBootApplication
-public class InboundApplication {
-
+public class XlateApplication {
+	
     @Autowired
     private CamelContext camelContext;
 
-    @Autowired
-    private Bus bus;
-    
-    @Autowired
-    private DEIMServiceImpl deimServiceImpl;
-
     public static void main(String[] args) {
-        SpringApplication.run(InboundApplication.class, args);
-    }
-    
-    @Bean
-    public Server rsServer() {
-        JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
-        endpoint.setBus(bus);
-        endpoint.setAddress("/");
-        endpoint.setServiceBeans(Arrays.<Object>asList(deimServiceImpl));
-        
-        //TODO: test this 2 options: is really necessary?
-        endpoint.setProvider(new JacksonJsonProvider());
-        endpoint.setFeatures(Arrays.asList(new Swagger2Feature()));
-        
-        return endpoint.create();
+    	SpringApplication.run(XlateApplication.class, args);
     }
 
     /**
