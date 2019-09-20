@@ -9,4 +9,6 @@ instances/agile-integration-homework/bin/artemis queue create --user admin --pas
 
 instances/agile-integration-homework/bin/artemis queue create --user admin --password admin --auto-create-address --address xlate.converter.dlq --name xlate.converter.dlq --preserve-on-no-consumers --durable --anycast --url tcp://localhost:61616
 
+instances/agile-integration-homework/bin/artemis queue create --user admin --password admin --auto-create-address --address nextgate.dlq --name nextgate.dlq --preserve-on-no-consumers --durable --anycast --url tcp://localhost:61616
+
 ----------------------------------------------

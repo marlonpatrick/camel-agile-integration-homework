@@ -10,6 +10,7 @@
 	<modules>
 		<module>inbound</module>
 		<module>xlate</module>
+		<module>outbound</module>
 	</modules>
 
 	<properties>
