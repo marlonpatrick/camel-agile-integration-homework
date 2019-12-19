@@ -1,6 +1,5 @@
 package br.com.g3solutions.agileintegration;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
@@ -42,8 +41,7 @@ public class DEIMServiceImpl implements DEIMService {
 		ResponseBuilderImpl builder = new ResponseBuilderImpl();
 
 		try {
-			String camelResponse = template.requestBodyAndHeaders(template.getDefaultEndpoint(), person, new HashMap<String, Object>(),
-					String.class);
+			String camelResponse = template.requestBody(template.getDefaultEndpoint(), person, String.class);
 
 			ESBResponse esbResponse = new ESBResponse();
 			esbResponse.setBusinessKey(UUID.randomUUID().toString());

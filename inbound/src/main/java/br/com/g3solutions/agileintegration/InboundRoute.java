@@ -12,7 +12,7 @@ public class InboundRoute  extends RouteBuilder {
 
 	public static final String FROM_ENDPOINT = "direct:inboundRoute";
 
-	public static final String TO_MESSAGING_SYSTEM_ID = "INBOUND_ROUTE_DEIM_IN";
+	public static final String TO_DEIM_IN_ENDPOINT_ID = "INBOUND_ROUTE_DEIM_IN";
 
 	public static final int EXCEPTION_MAX_REDELIVERIES = 3;
 
@@ -30,7 +30,7 @@ public class InboundRoute  extends RouteBuilder {
 		.marshal().jaxb(Boolean.FALSE)
         .log(">>> direct:inboundRoute XML:\n${body}")
 		.setExchangePattern(ExchangePattern.InOnly)
-		.to("amqp:queue:deim.in").id(TO_MESSAGING_SYSTEM_ID)
+		.to("amqp:queue:deim.in").id(TO_DEIM_IN_ENDPOINT_ID)
 		.transform().constant("DONE")
     	.log(">>> DONE");
     }
