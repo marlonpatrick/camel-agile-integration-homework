@@ -21,7 +21,7 @@ import com.customer.app.response.ESBResponse;
 @Component
 public class DEIMServiceImpl implements DEIMService {
 
-	@Produce(uri = "direct:inboundRoute")
+	@Produce(uri = InboundRoute.FROM_ENDPOINT)
 	ProducerTemplate template;
 
 	@Override

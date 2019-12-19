@@ -13,12 +13,13 @@
 		<module>outbound</module>
 	</modules>
 
-	<properties>
-		<fuse.version>7.4.0.fuse-sb2-740019-redhat-00005</fuse.version>
+	<properties>	
+		<fuse.version>7.5.0.fuse-sb2-750029-redhat-00003</fuse.version>
+<!-- 		<fuse.version>7.4.0.fuse-sb2-740019-redhat-00005</fuse.version> -->
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
-		<jackson.version>2.9.8</jackson.version><!-- the same in the spring-boot-dependencies-2.1.3.RELEASE.pom -->
+		<jackson.version>2.9.9</jackson.version><!-- the same in the spring-boot -->
 	</properties>
 
 
@@ -132,26 +133,43 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-           <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${jackson.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson</groupId>
+				<artifactId>jackson-bom</artifactId>
+				<version>${jackson.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring-boot-starter</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-spring-boot-starter</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-test-spring</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.camel</groupId> -->
+<!-- 			<artifactId>camel-spring-javaconfig</artifactId> -->
+<!-- 		</dependency> -->
+
 	</dependencies>
 
 </project>
