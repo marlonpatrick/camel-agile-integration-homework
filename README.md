@@ -3,6 +3,7 @@
 - Red Hat Fuse 7.5
 - AMQ Broker 7.5
 - Red Hat Fuse Karaf 7.5.0
+- Spring Boot 2
 - Apache Camel 2.23
 
 Hi! I'm your first Markdown file in **StackEdit**. If you want to learn about StackEdit, you can read me. If you want to play with Markdown, you can edit me. Once you have finished with me, you can create new files by opening the **file explorer** on the left corner of the navigation bar.
