@@ -15,7 +15,6 @@
 
 	<properties>	
 		<fuse.version>7.5.0.fuse-sb2-750029-redhat-00003</fuse.version>
-<!-- 		<fuse.version>7.4.0.fuse-sb2-740019-redhat-00005</fuse.version> -->
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
