@@ -469,3 +469,12 @@ To trigger the routes, you must invoke the REST service exposed by Inbound app a
             <p:status xsi:type="p:Code"/>
         </p:AdvanceDirective>
     </p:Person> '
+
+The expected response should be similar to:
+
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <ESBResponse xmlns="http://www.response.app.customer.com">
+        <BusinessKey>2a915e73-fb26-4247-9bec-1bb1e1c0e319</BusinessKey>
+        <Published>true</Published>
+        <Comment>DONE</Comment>
+    </ESBResponse>
