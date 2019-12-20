@@ -20,17 +20,16 @@ After download this repository:
 
     cd  camel-agile-integration-homework/legacy-nextgate-service/parent
     mvn clean install
-
-
-    cd  camel-agile-integration-homework/fuse7-homework
-    mvn clean test
+    
+    cd  camel-agile-integration-homework/legacy-nextgate-service/parent
+    mvn clean install
 
 # Running Tests
 
 All tests are mocked, so you don't need to install anything else.
 
-    cd  camel-agile-integration-homework/legacy-nextgate-service/parent
-    mvn clean install
+    cd  camel-agile-integration-homework/fuse7-homework
+    mvn clean test
 
 # Configure dev enviroment
 
@@ -76,3 +75,5 @@ By default, the Nextgate Service will running in **8181** port.
 # Running Routes
 
 ## Inbound Route
+
+You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
