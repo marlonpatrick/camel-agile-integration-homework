@@ -1,12 +1,10 @@
 # Agile Integration Homework
 
-- Red Hat Fuse 7.5
-- AMQ Broker 7.5
-- Red Hat Fuse Karaf 7.5.0
-- Spring Boot 2
 - Apache Camel 2.23
-
-Hi! I'm your first Markdown file in **StackEdit**. If you want to learn about StackEdit, you can read me. If you want to play with Markdown, you can edit me. Once you have finished with me, you can create new files by opening the **file explorer** on the left corner of the navigation bar.
+- Spring Boot 2
+- Red Hat Fuse 7.5
+- Red Hat AMQ Broker 7.5
+- Red Hat Fuse Karaf 7.5.0
 
 # Basic Setup
 
@@ -34,10 +32,10 @@ All tests are mocked, so you don't need to install anything else.
     cd  camel-agile-integration-homework/legacy-nextgate-service/parent
     mvn clean install
 
-# Running dev enviroment
+# Configure dev enviroment
 
 
-## Configure AMQ Broker 7.5.0
+## Create Queues in Red Hat AMQ Broker 7.5.0
 
 After download/unzip AMQ Broker 7.5.0: 
 
@@ -54,3 +52,27 @@ After download/unzip AMQ Broker 7.5.0:
     instances/agile-integration-homework/bin/artemis queue create --user admin --password admin --auto-create-address --address xlate.converter.dlq --name xlate.converter.dlq --preserve-on-no-consumers --durable --anycast --url tcp://localhost:61616
     
     instances/agile-integration-homework/bin/artemis queue create --user admin --password admin --auto-create-address --address nextgate.dlq --name nextgate.dlq --preserve-on-no-consumers --durable --anycast --url tcp://localhost:61616
+
+By default, the main port that will be used by the application is **5672** (AMQ protocol).
+
+## Deploy Nextgate Legacy Service in Red Hat Karaf 7.5
+
+After download/unzip/start Red Hat Karaf 7.5, go to Karaf cli console and execute:
+
+
+    osgi:install mvn:com.customer.app/integration-test-server/1.0-SNAPSHOT
+    
+    osgi:install mvn:com.customer.app/artifacts/1.0-SNAPSHOT
+    
+    osgi:start [bundle-id for integration-test-server]
+    
+    osgi:start [bundle-id for artifacts]
+    
+    osgi:list
+
+
+By default, the Nextgate Service will running in **8181** port.
+
+# Running Routes
+
+## Inbound Route
