@@ -21,14 +21,6 @@
 		<jackson.version>2.9.9</jackson.version><!-- the same in the spring-boot -->
 	</properties>
 
-
-	<!-- Deopis tentar colocar todos os repositórios do fuse de modo que não 
-		seja necessário ajustar o settings.xml -->
-
-	<!-- <repositories> <repository> <id>red-hat-ga-repository</id> <url>https://maven.repository.redhat.com/ga</url> 
-		</repository> </repositories> <pluginRepositories> <pluginRepository> <id>red-hat-ga-repository</id> 
-		<url>https://maven.repository.redhat.com/ga</url> </pluginRepository> </pluginRepositories> -->
-
 	<build>
 		<defaultGoal>spring-boot:run</defaultGoal>
 		<plugins>
@@ -163,12 +155,6 @@
 			<artifactId>camel-test-spring</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.camel</groupId> -->
-<!-- 			<artifactId>camel-spring-javaconfig</artifactId> -->
-<!-- 		</dependency> -->
-
 	</dependencies>
 
 </project>
