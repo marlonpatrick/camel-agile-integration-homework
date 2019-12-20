@@ -27,47 +27,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 @SpringBootApplication
 public class InboundApplication {
 
-    @Autowired
-    private CamelContext camelContext;
+	@Autowired
+	private CamelContext camelContext;
 
-    @Autowired
-    private Bus bus;
-    
-    @Autowired
-    private DEIMServiceImpl deimServiceImpl;
+	@Autowired
+	private Bus bus;
 
-    public static void main(String[] args) {
-        SpringApplication.run(InboundApplication.class, args);
-    }
-    
-    @Bean
-    public Server rsServer() {
-        JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
-        endpoint.setBus(bus);
-        endpoint.setAddress("/");
-        endpoint.setServiceBeans(Arrays.<Object>asList(deimServiceImpl));
-        
-        //TODO: test this 2 options: is really necessary?
-        endpoint.setProvider(new JacksonJsonProvider());
-        endpoint.setFeatures(Arrays.asList(new Swagger2Feature()));
-        
-        return endpoint.create();
-    }
+	@Autowired
+	private DEIMServiceImpl deimServiceImpl;
 
-    /**
-     * export AMQP_SERVICE_HOST = "localhost"
-     * export AMQP_SERVICE_PORT = "5672"
-     * export AMQP_SERVICE_USERNAME = "username"
-     * export AMQP_SERVICE_PASSWORD = "password"
-     */
-    @Bean
-    AMQPConnectionDetails amqpConnection() {
-      return AMQPConnectionDetails.discoverAMQP(camelContext);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(InboundApplication.class, args);
+	}
+
+	@Bean
+	public Server rsServer() {
+		JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
+		endpoint.setBus(bus);
+		endpoint.setAddress("/");
+		endpoint.setServiceBeans(Arrays.<Object>asList(deimServiceImpl));
+
+		// TODO: test this 2 options: is really necessary?
+		endpoint.setProvider(new JacksonJsonProvider());
+		endpoint.setFeatures(Arrays.asList(new Swagger2Feature()));
+
+		return endpoint.create();
+	}
+
+	@Bean
+	AMQPConnectionDetails amqpConnection(Environment env) {
+		String host = env.getProperty("amqp.service.host");
+		String port = env.getProperty("amqp.service.port");
+
+		return new AMQPConnectionDetails("amqp://" + host + ":" + port, env.getProperty("amqp.service.username"),
+				env.getProperty("amqp.service.password"), Boolean.TRUE);
+	}
 }

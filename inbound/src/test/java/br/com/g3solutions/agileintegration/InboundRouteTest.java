@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.util.XmlExpectationsHelper;
 
 import com.customer.app.Code;
 import com.customer.app.Person;
@@ -41,6 +42,8 @@ public class InboundRouteTest {
 	@Autowired
 	@Produce (uri = InboundRoute.FROM_ENDPOINT)
 	private ProducerTemplate template;
+	
+	private XmlExpectationsHelper xmlExpectationsHelper = new XmlExpectationsHelper();
 
 	@Test
 	public void testOutput() throws Exception {
@@ -50,7 +53,7 @@ public class InboundRouteTest {
 		camelContext.getRouteDefinition(InboundRoute.ROUTE_ID).adviceWith(camelContext, new AdviceWithRouteBuilder() {
 			@Override
 			public void configure() throws Exception {
-				weaveById(InboundRoute.TO_DEIM_IN_ENDPOINT_ID).replace().to("mock:deim.in");
+				weaveById(InboundRoute.DEIM_IN_QUEUE_ENDPOINT_ID).replace().to("mock:deim.in");
 			}
 		});
 
@@ -63,13 +66,16 @@ public class InboundRouteTest {
 		MockEndpoint mockDeimIn = camelContext.getEndpoint("mock:deim.in", MockEndpoint.class);
 		mockDeimIn.expectedMessageCount(1);
 		mockDeimIn.expectedHeaderReceived(Exchange.CONTENT_TYPE, "application/xml");
-		mockDeimIn.expectedBodiesReceived(toXML(person));
 
 		String camelResponse = template.requestBody(template.getDefaultEndpoint(), person, String.class);
 
 		assertEquals("DONE", camelResponse);
 
 		mockDeimIn.assertIsSatisfied();
+		
+		String deimInMessage = mockDeimIn.getExchanges().get(0).getIn().getBody(String.class);
+		
+		xmlExpectationsHelper.assertXmlEqual(deimInMessage, toXML(person));
 	}
 
 	@Test
@@ -110,14 +116,14 @@ public class InboundRouteTest {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
 		sb.append("<Person xmlns=\"http://www.app.customer.com\">\n");
+		sb.append("    <fathername>" + person.getFathername() + "</fathername>\n");
 		sb.append("    <legalname>\n");
 		sb.append("        <given>" + person.getLegalname().getGiven() + "</given>\n");
 		sb.append("    </legalname>\n");
-		sb.append("    <fathername>" + person.getFathername() + "</fathername>\n");
-		sb.append("    <mothername>" + person.getMothername() + "</mothername>\n");
 		sb.append("    <gender>\n");
 		sb.append("        <code>" + person.getGender().getCode() + "</code>\n");
 		sb.append("    </gender>\n");
+		sb.append("    <mothername>" + person.getMothername() + "</mothername>\n");
 		sb.append("</Person>\n");
 
 		return sb.toString();

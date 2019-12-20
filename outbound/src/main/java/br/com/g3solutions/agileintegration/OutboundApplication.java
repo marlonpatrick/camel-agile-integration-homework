@@ -15,31 +15,25 @@
  */
 package br.com.g3solutions.agileintegration;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.component.amqp.AMQPConnectionDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 
 @SpringBootApplication
 public class OutboundApplication {
 	
-    @Autowired
-    private CamelContext camelContext;
-
     public static void main(String[] args) {
     	SpringApplication.run(OutboundApplication.class, args);
     }
-    
-    /**
-     * export AMQP_SERVICE_HOST = "localhost"
-     * export AMQP_SERVICE_PORT = "5672"
-     * export AMQP_SERVICE_USERNAME = "username"
-     * export AMQP_SERVICE_PASSWORD = "password"
-     */
-    @Bean
-    AMQPConnectionDetails amqpConnection() {
-      return AMQPConnectionDetails.discoverAMQP(camelContext);
-    }
+
+	@Bean
+	AMQPConnectionDetails amqpConnection(Environment env) {
+		String host = env.getProperty("amqp.service.host");
+		String port = env.getProperty("amqp.service.port");
+
+		return new AMQPConnectionDetails("amqp://" + host + ":" + port, env.getProperty("amqp.service.username"),
+				env.getProperty("amqp.service.password"), Boolean.TRUE);
+	}
 }

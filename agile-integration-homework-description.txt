@@ -23,26 +23,6 @@ TO SOLVE
 			<scope>system</scope>
 			<systemPath>${user.home}/.m2/repository/com/customer/app/artifacts/1.0-SNAPSHOT/artifacts-1.0-SNAPSHOT.jar</systemPath>
 		</dependency>
-----------------------------------------------
-
-
-InboundApplication / XlateApplication
-
-AMQP_SERVICE_HOST=localhost
-AMQP_SERVICE_PASSWORD=admin
-AMQP_SERVICE_PORT=5672
-AMQP_SERVICE_USERNAME=admin
-
-----------------------------------------------
-
-OutboundApplication
-
-AMQP_SERVICE_HOST=localhost
-AMQP_SERVICE_PASSWORD=admin
-AMQP_SERVICE_PORT=5672
-AMQP_SERVICE_USERNAME=admin
-NEXTGATE_URL=http://localhost:8181/cxf/PersonEJBService/PersonEJB?serviceClass=com.sun.mdm.index.webservice.PersonEJB&dataFormat=MESSAGE
-
 
 ----------------------------------------------
 
