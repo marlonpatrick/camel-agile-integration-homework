@@ -8,8 +8,6 @@
 		<profile>
 			<id>my-profile</id>
 
-			<localRepository>${user.home}/.m2/repository</localRepository>
-
 			<repositories>
 				<repository>
 					<id>maven-central-repository</id>
