@@ -17,7 +17,6 @@ package br.com.g3solutions.agileintegration;
 
 import java.util.Arrays;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.component.amqp.AMQPConnectionDetails;
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
@@ -33,9 +32,6 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 @SpringBootApplication
 public class InboundApplication {
-
-	@Autowired
-	private CamelContext camelContext;
 
 	@Autowired
 	private Bus bus;

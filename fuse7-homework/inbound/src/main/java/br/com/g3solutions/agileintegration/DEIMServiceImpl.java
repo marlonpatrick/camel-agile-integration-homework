@@ -3,7 +3,6 @@ package br.com.g3solutions.agileintegration;
 import java.util.UUID;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
@@ -24,33 +23,26 @@ public class DEIMServiceImpl implements DEIMService {
 	ProducerTemplate template;
 
 	@Override
-	@GET
-	@Path("/test")
-	public String test() {
-		return "CXF Homework Test";
-	}
-
-	@Override
 	@POST
 	@Path("/addPerson")
 	@Consumes(MediaType.APPLICATION_XML)
 	public Response addPerson(Person person) {
 
-		System.out.println("calling addPerson...");
-
 		ResponseBuilderImpl builder = new ResponseBuilderImpl();
+
+		ESBResponse esbResponse = new ESBResponse();
 
 		try {
 			String camelResponse = template.requestBody(template.getDefaultEndpoint(), person, String.class);
 
-			ESBResponse esbResponse = new ESBResponse();
 			esbResponse.setBusinessKey(UUID.randomUUID().toString());
-			esbResponse.setPublished(true);
+			esbResponse.setPublished(Boolean.TRUE);
 			esbResponse.setComment(camelResponse);
 			builder.status(Response.Status.OK);
 			builder.entity(esbResponse);
 
 		} catch (Exception e) {
+			esbResponse.setComment("ERROR");
 			builder.status(Response.Status.INTERNAL_SERVER_ERROR);
 			builder.entity(e.getMessage());
 			e.printStackTrace();
