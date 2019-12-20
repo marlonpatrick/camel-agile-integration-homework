@@ -93,6 +93,8 @@ By default, the Inbound App will start a web server in **8080** port with Spring
 
 # Trigger the Routes
 
+To trigger the routes, you must invoke the REST service exposed by Inbound app at http://localhost:8080/rest/addPerson .
+
     curl -X POST \
       http://localhost:8080/rest/addPerson \
       -H 'Content-Type: application/xml' \
