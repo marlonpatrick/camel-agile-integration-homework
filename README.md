@@ -21,7 +21,7 @@ After download this repository:
     cd  camel-agile-integration-homework/legacy-nextgate-service/parent
     mvn clean install
     
-    cd  camel-agile-integration-homework/legacy-nextgate-service/parent
+    cd  camel-agile-integration-homework/legacy-nextgate-service/core
     mvn clean install
 
 # Running Tests
